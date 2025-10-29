@@ -23,10 +23,17 @@
 
     <!-- Music Player -->
     <div class="music-player">
-        <button id="music-toggle" class="music-btn">
-            <span id="music-icon">🎵</span>
-            <span id="music-text">Play Music</span>
-        </button>
+        <div class="music-controls">
+            <div id="song-title" class="song-title">🎵 Happy Rock</div>
+            <div class="music-buttons">
+                <button id="prev-song" class="music-nav-btn">⏮️</button>
+                <button id="music-toggle" class="music-btn">
+                    <span id="music-icon">🎵</span>
+                    <span id="music-text">Play Music</span>
+                </button>
+                <button id="next-song" class="music-nav-btn">⏭️</button>
+            </div>
+        </div>
     </div>
 
     <!-- Hero Section with Photo Slideshow -->
@@ -132,11 +139,6 @@
     <button id="celebrate-btn" class="celebrate-button">
         🎉 Celebrate Christopher!
     </button>
-
-    <!-- Hidden Audio Element for Background Music -->
-    <audio id="background-music" loop>
-        <source src="https://www.bensound.com/bensound-music/bensound-happyrock.mp3" type="audio/mpeg">
-    </audio>
 
     <script src="script.js"></script>
     <script src="home.js"></script>
