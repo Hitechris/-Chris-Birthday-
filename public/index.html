@@ -19,16 +19,106 @@
         </div>
     </nav>
 
-    <div class="hero-section">
-        <div class="hero-content">
-            <h1 class="hero-title">🎉 Happy Birthday Christopher Hite! 🎉</h1>
+    <!-- Music Player -->
+    <div class="music-player">
+        <button id="music-toggle" class="music-btn">
+            <span id="music-icon">🎵</span>
+            <span id="music-text">Play Music</span>
+        </button>
+    </div>
+
+    <!-- Hero Section with Photo Slideshow -->
+    <div class="hero-section-home">
+        <div class="hero-overlay"></div>
+        
+        <!-- Photo Slideshow Background -->
+        <div class="slideshow-container">
+            <div class="slide fade">
+                <img src="images/IMG_3587.JPG" alt="Christopher">
+            </div>
+            <div class="slide fade">
+                <img src="images/IMG_3588.JPG" alt="Christopher">
+            </div>
+            <div class="slide fade">
+                <img src="images/IMG_3589.JPG" alt="Christopher">
+            </div>
+            <div class="slide fade">
+                <img src="images/IMG_3590.JPG" alt="Christopher">
+            </div>
+            <div class="slide fade">
+                <img src="images/IMG_3591.JPG" alt="Christopher">
+            </div>
+            <div class="slide fade">
+                <img src="images/IMG_3592.JPG" alt="Christopher">
+            </div>
+        </div>
+        
+        <div class="hero-content-overlay">
+            <h1 class="hero-title-main">🎉 Happy Birthday 🎉</h1>
+            <h2 class="hero-name">Christopher Hite</h2>
             <p class="hero-subtitle">Celebrating an amazing person on their special day!</p>
             <div class="hero-buttons">
-                <a href="gallery.html" class="btn btn-primary">View Photos</a>
+                <a href="gallery.html" class="btn btn-primary">View All Photos</a>
                 <a href="wishes.html" class="btn btn-secondary">Read Wishes</a>
             </div>
         </div>
     </div>
+
+    <!-- Featured Photos Section -->
+    <section class="featured-section">
+        <div class="container">
+            <h2 class="section-title">📸 Featured Moments</h2>
+            <div class="featured-grid">
+                <div class="featured-card">
+                    <img src="images/IMG_3593.JPG" alt="Christopher">
+                    <div class="featured-overlay">
+                        <p>Wonderful Memories</p>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="images/IMG_3594.JPG" alt="Christopher">
+                    <div class="featured-overlay">
+                        <p>Great Times</p>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="images/IMG_3595.JPG" alt="Christopher">
+                    <div class="featured-overlay">
+                        <p>Special Moments</p>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="images/IMG_3596.JPG" alt="Christopher">
+                    <div class="featured-overlay">
+                        <p>Happy Memories</p>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="images/IMG_3597.JPG" alt="Christopher">
+                    <div class="featured-overlay">
+                        <p>Cherished Times</p>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="images/IMG_3598.JPG" alt="Christopher">
+                    <div class="featured-overlay">
+                        <p>Beautiful Days</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Birthday Message Section -->
+    <section class="message-section">
+        <div class="container">
+            <div class="message-box-home">
+                <h2>🎈 A Special Message 🎈</h2>
+                <p>Today we celebrate YOU, Christopher Hite! May this year bring you endless joy, amazing adventures, and all the happiness your heart can hold. You deserve the very best birthday celebration!</p>
+                <a href="wishes.html" class="btn btn-primary">See All Birthday Wishes</a>
+            </div>
+        </div>
+    </section>
 
     <div id="celebration-container"></div>
     <div id="balloon-container"></div>
@@ -37,6 +127,12 @@
         🎉 Celebrate Christopher!
     </button>
 
+    <!-- Hidden Audio Element for Background Music -->
+    <audio id="background-music" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-happyrock.mp3" type="audio/mpeg">
+    </audio>
+
     <script src="script.js"></script>
+    <script src="home.js"></script>
 </body>
 </html>
