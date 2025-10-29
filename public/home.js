@@ -204,9 +204,13 @@ function loadVideo(index) {
 
 // Initialize video playlist
 function initializeVideoPlaylist() {
+    videoList.innerHTML = ''; // Clear any existing items
     videoPlaylist.forEach((video, index) => {
         const videoItem = document.createElement('div');
         videoItem.className = 'video-item';
+        if (index === 0) {
+            videoItem.classList.add('active');
+        }
         videoItem.textContent = video.title;
         videoItem.addEventListener('click', () => {
             loadVideo(index);
@@ -214,11 +218,6 @@ function initializeVideoPlaylist() {
         });
         videoList.appendChild(videoItem);
     });
-
-    // Set first video as active
-    if (videoList.firstChild) {
-        videoList.firstChild.classList.add('active');
-    }
 }
 
 // Auto-play next video when current one ends
@@ -228,6 +227,10 @@ celebrationVideo.addEventListener('ended', () => {
     celebrationVideo.play();
 });
 
-// Initialize video player
-initializeVideoPlaylist();
-loadVideo(0);
+// Initialize video player when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    if (celebrationVideo && videoList) {
+        initializeVideoPlaylist();
+        loadVideo(0);
+    }
+});
