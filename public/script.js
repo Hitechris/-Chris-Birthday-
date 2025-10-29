@@ -11,11 +11,12 @@ const BIRTHDAY_MESSAGES = [
 ];
 
 // Animation settings - Change these to adjust speed and behavior
-const ANIMATION_DURATION = 10000; // Duration in milliseconds (10 seconds)
-const BUBBLE_COUNT = 25; // Number of bubbles to create
-const BALLOON_COUNT = 15; // Number of balloons to create
+const ANIMATION_DURATION = 15000; // Duration in milliseconds (15 seconds)
+const BUBBLE_COUNT = 20; // Number of bubbles to create
+const BALLOON_COUNT = 12; // Number of balloons to create
 const BUBBLE_MIN_SIZE = 80; // Minimum bubble size in pixels
 const BUBBLE_MAX_SIZE = 150; // Maximum bubble size in pixels
+const BUBBLE_FLOAT_SPEED = 12; // Speed in seconds (higher = slower)
 
 // Bubble and balloon colors - Add or modify colors here
 const BUBBLE_COLORS = [
@@ -153,22 +154,22 @@ function popBubble(bubble) {
         }
     }, 300);
     
-    // Show pop message
+    // Show pop message in header
     showPopMessage();
 }
 
-// Show a celebration message when a bubble pops
+// Show a celebration message when a bubble pops - displayed in header
 function showPopMessage() {
     const message = document.createElement('div');
-    message.className = 'pop-message';
+    message.className = 'pop-message-header';
     message.textContent = randomItem(BIRTHDAY_MESSAGES);
     
     document.body.appendChild(message);
     
-    // Remove message after animation
+    // Remove message after animation (slower)
     setTimeout(() => {
         message.remove();
-    }, 1500);
+    }, 3500);
 }
 
 // Start the celebration animation
