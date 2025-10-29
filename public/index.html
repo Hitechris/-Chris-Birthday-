@@ -7,28 +7,35 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🎂 Happy Birthday Christopher Hite! 🎂</h1>
-            <p class="subtitle">Wishing you an amazing day filled with joy and blessings!</p>
-        </header>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">🎂 Christopher's Birthday</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="gallery.html">Photo Gallery</a></li>
+                <li><a href="wishes.html">Birthday Wishes</a></li>
+                <li><a href="about.html">About Christopher</a></li>
+            </ul>
+        </div>
+    </nav>
 
-        <main>
-            <div class="content">
-                <div class="birthday-message">
-                    <p>Today we celebrate YOU! 🎈</p>
-                    <p>May this year bring you endless happiness, success, and unforgettable memories!</p>
-                </div>
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">🎉 Happy Birthday Christopher Hite! 🎉</h1>
+            <p class="hero-subtitle">Celebrating an amazing person on their special day!</p>
+            <div class="hero-buttons">
+                <a href="gallery.html" class="btn btn-primary">View Photos</a>
+                <a href="wishes.html" class="btn btn-secondary">Read Wishes</a>
             </div>
-        </main>
-
-        <div id="celebration-container"></div>
-        <div id="balloon-container"></div>
-
-        <button id="celebrate-btn" class="celebrate-button">
-            🎉 Celebrate Christopher!
-        </button>
+        </div>
     </div>
+
+    <div id="celebration-container"></div>
+    <div id="balloon-container"></div>
+
+    <button id="celebrate-btn" class="celebrate-button">
+        🎉 Celebrate Christopher!
+    </button>
 
     <script src="script.js"></script>
 </body>
