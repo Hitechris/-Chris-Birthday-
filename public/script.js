@@ -12,8 +12,8 @@ const BIRTHDAY_MESSAGES = [
 
 // Animation settings - Change these to adjust speed and behavior
 const ANIMATION_DURATION = 15000; // Duration in milliseconds (15 seconds)
-const BUBBLE_COUNT = 20; // Number of bubbles to create
-const BALLOON_COUNT = 12; // Number of balloons to create
+const BUBBLE_COUNT = 30; // Number of bubbles to create
+const BALLOON_COUNT = 8; // Number of balloons to create
 const BUBBLE_MIN_SIZE = 80; // Minimum bubble size in pixels
 const BUBBLE_MAX_SIZE = 150; // Maximum bubble size in pixels
 const BUBBLE_FLOAT_SPEED = 12; // Speed in seconds (higher = slower)
@@ -99,7 +99,7 @@ function createBubble() {
     bubble.style.setProperty('--drift', `${drift}px`);
     
     // Randomly decide if this bubble gets an image or just a color
-    const useImage = imageFiles.length > 0 && Math.random() > 0.4;
+    const useImage = imageFiles.length > 0 && Math.random() > 0.2;
     
     if (useImage) {
         const img = document.createElement('img');
