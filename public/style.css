@@ -18,7 +18,7 @@ body {
     padding: 1rem 0;
     position: sticky;
     top: 0;
-    z-index: 200;
+    z-index: 50;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -583,6 +583,33 @@ body {
     z-index: 100;
 }
 
+.celebrate-instruction {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    color: #764ba2;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    z-index: 99;
+    max-width: 90%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        transform: translateX(-50%) scale(1.05);
+    }
+}
+
 .celebrate-button:hover {
     transform: translateX(-50%) scale(1.05);
     box-shadow: 0 15px 40px rgba(245, 87, 108, 0.6);
@@ -939,6 +966,12 @@ body {
     .celebrate-button {
         padding: 1rem 2rem;
         font-size: 1.1rem;
+    }
+    
+    .celebrate-instruction {
+        font-size: 0.85rem;
+        padding: 0.6rem 1.2rem;
+        bottom: 80px;
     }
     
     .pop-message-header {
