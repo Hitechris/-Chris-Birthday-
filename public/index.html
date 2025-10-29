@@ -36,6 +36,26 @@
         </div>
     </div>
 
+    <!-- Video Player -->
+    <div class="video-player">
+        <div class="video-controls-header">
+            <div class="video-title" id="video-title">🎬 Celebration Video</div>
+            <button id="toggle-video-player" class="video-toggle-btn">📹 Show Videos</button>
+        </div>
+        <div id="video-player-container" class="video-player-container" style="display: none;">
+            <video id="celebration-video" class="celebration-video" controls>
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-playlist">
+                <div class="playlist-title">📂 Video Playlist</div>
+                <div id="video-list" class="video-list">
+                    <!-- Video items will be added here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Hero Section with Photo Slideshow -->
     <div class="hero-section-home">
         <div class="hero-overlay"></div>
