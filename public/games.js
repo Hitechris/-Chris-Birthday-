@@ -1,278 +1,395 @@
 
-// Christopher's Birthday Monopoly Game Logic
+// Christopher's Birthday Candy Crush Game
+
+const BOARD_SIZE = 8;
+const CANDY_TYPES = ['🎂', '🍰', '🧁', '🍭', '🍬', '🍫'];
 
 const gameState = {
-    currentPlayer: 1,
-    players: {
-        1: { name: 'Player 1', money: 1500, position: 0, properties: [] },
-        2: { name: 'Player 2', money: 1500, position: 0, properties: [] }
-    },
-    hasRolled: false,
-    gameLog: []
+    board: [],
+    score: 0,
+    moves: 30,
+    level: 1,
+    selectedCandy: null,
+    isProcessing: false
 };
 
-const spaces = [
-    { name: 'GO', type: 'go', action: 'collect', amount: 200 },
-    { name: 'Birthday Cake Avenue', type: 'property', price: 60, rent: 10 },
-    { name: '🎁 Gift Card', type: 'chest' },
-    { name: 'Party Hat Place', type: 'property', price: 60, rent: 10 },
-    { name: 'Birthday Tax', type: 'tax', amount: 200 },
-    { name: '🚂 Celebration Station', type: 'railroad', price: 200, rent: 50 },
-    { name: 'Balloon Boulevard', type: 'property', price: 100, rent: 15 },
-    { name: '❓ Surprise', type: 'chance' },
-    { name: 'Confetti Court', type: 'property', price: 100, rent: 15 },
-    { name: 'Streamers Street', type: 'property', price: 120, rent: 18 },
-    { name: 'Time Out', type: 'jail' },
-    { name: 'Candle Lane', type: 'property', price: 140, rent: 20 },
-    { name: '🎵 Music Box', type: 'utility', price: 150, rent: 25 },
-    { name: 'Frosting Falls', type: 'property', price: 140, rent: 20 },
-    { name: 'Sprinkles Square', type: 'property', price: 160, rent: 22 },
-    { name: '🚂 Party Express', type: 'railroad', price: 200, rent: 50 },
-    { name: 'Wish Avenue', type: 'property', price: 180, rent: 25 },
-    { name: '🎁 Gift Card', type: 'chest' },
-    { name: 'Memory Lane', type: 'property', price: 180, rent: 25 },
-    { name: 'Celebration Circle', type: 'property', price: 200, rent: 28 },
-    { name: 'Free Parking', type: 'free' },
-    { name: 'Gift Wrap Grove', type: 'property', price: 220, rent: 30 },
-    { name: '❓ Surprise', type: 'chance' },
-    { name: 'Present Plaza', type: 'property', price: 220, rent: 30 },
-    { name: 'Ribbon Road', type: 'property', price: 240, rent: 32 },
-    { name: '🚂 Joy Junction', type: 'railroad', price: 200, rent: 50 },
-    { name: 'Happiness Highway', type: 'property', price: 260, rent: 35 },
-    { name: 'Smile Street', type: 'property', price: 260, rent: 35 },
-    { name: '🎪 Party Tent', type: 'utility', price: 150, rent: 25 },
-    { name: 'Laughter Lane', type: 'property', price: 280, rent: 38 },
-    { name: 'Go to Time Out', type: 'gotojail' },
-    { name: 'Christopher Court', type: 'property', price: 300, rent: 40 },
-    { name: 'Birthday Boulevard', type: 'property', price: 300, rent: 40 },
-    { name: '🎁 Gift Card', type: 'chest' },
-    { name: 'Festivity Field', type: 'property', price: 320, rent: 42 },
-    { name: '🚂 Fun Ferry', type: 'railroad', price: 200, rent: 50 },
-    { name: '❓ Surprise', type: 'chance' },
-    { name: 'VIP Village', type: 'property', price: 350, rent: 45 },
-    { name: 'Luxury Tax', type: 'tax', amount: 100 },
-    { name: 'Party Palace', type: 'property', price: 400, rent: 50 }
-];
-
-const chestCards = [
-    { text: 'Happy Birthday! Collect $200', amount: 200 },
-    { text: 'You won a party game! Collect $100', amount: 100 },
-    { text: 'Birthday gift from grandma! Collect $50', amount: 50 },
-    { text: 'Cake delivery fee. Pay $50', amount: -50 },
-    { text: 'Advance to GO! Collect $200', special: 'go' }
-];
-
-const chanceCards = [
-    { text: 'Surprise party! Collect $150', amount: 150 },
-    { text: 'Birthday wishes from friends! Collect $100', amount: 100 },
-    { text: 'Party cleanup cost. Pay $75', amount: -75 },
-    { text: 'Go back 3 spaces', special: 'back3' },
-    { text: 'Advance to the nearest railroad', special: 'railroad' }
-];
-
-// Initialize game
+// Initialize the game
 function initGame() {
-    document.getElementById('roll-dice').addEventListener('click', rollDice);
-    document.getElementById('end-turn').addEventListener('click', endTurn);
-    document.getElementById('restart-game').addEventListener('click', restartGame);
+    createBoard();
     updateDisplay();
-    addLog('🎮 Game started! Player 1 goes first.');
+    
+    document.getElementById('new-game').addEventListener('click', newGame);
+    document.getElementById('hint-btn').addEventListener('click', showHint);
 }
 
-function rollDice() {
-    if (gameState.hasRolled) return;
+// Create the game board
+function createBoard() {
+    const boardElement = document.getElementById('game-board');
+    boardElement.innerHTML = '';
+    gameState.board = [];
     
-    const dice1 = Math.floor(Math.random() * 6) + 1;
-    const dice2 = Math.floor(Math.random() * 6) + 1;
-    const total = dice1 + dice2;
-    
-    gameState.hasRolled = true;
-    document.getElementById('roll-dice').disabled = true;
-    document.getElementById('end-turn').disabled = false;
-    
-    const player = gameState.players[gameState.currentPlayer];
-    const oldPosition = player.position;
-    player.position = (player.position + total) % 40;
-    
-    // Check if passed GO
-    if (player.position < oldPosition) {
-        player.money += 200;
-        addLog(`${player.name} passed GO! Collected $200`);
+    for (let row = 0; row < BOARD_SIZE; row++) {
+        gameState.board[row] = [];
+        for (let col = 0; col < BOARD_SIZE; col++) {
+            const candy = createCandy(row, col);
+            gameState.board[row][col] = candy;
+            boardElement.appendChild(candy.element);
+        }
     }
     
-    addLog(`${player.name} rolled ${dice1} + ${dice2} = ${total}`);
-    moveToken(gameState.currentPlayer, player.position);
-    
-    setTimeout(() => {
-        handleSpace(player.position);
-        updateDisplay();
-    }, 600);
-}
-
-function moveToken(playerNum, position) {
-    const token = document.getElementById(`player${playerNum}-token`);
-    const space = document.querySelector(`[data-space="${position}"]`);
-    
-    if (space) {
-        const rect = space.getBoundingClientRect();
-        const boardRect = document.querySelector('.monopoly-board').getBoundingClientRect();
-        
-        const left = rect.left - boardRect.left + (playerNum === 1 ? 20 : 50);
-        const top = rect.top - boardRect.top + 20;
-        
-        token.style.left = `${left}px`;
-        token.style.top = `${top}px`;
-        token.style.bottom = 'auto';
-        token.style.right = 'auto';
+    // Ensure no initial matches
+    while (checkAllMatches().length > 0) {
+        regenerateBoard();
     }
 }
 
-function handleSpace(position) {
-    const space = spaces[position];
-    const player = gameState.players[gameState.currentPlayer];
+// Create a single candy
+function createCandy(row, col) {
+    const candyElement = document.createElement('div');
+    candyElement.className = 'candy';
+    const type = CANDY_TYPES[Math.floor(Math.random() * CANDY_TYPES.length)];
+    candyElement.textContent = type;
+    candyElement.dataset.row = row;
+    candyElement.dataset.col = col;
     
-    addLog(`${player.name} landed on ${space.name}`);
+    candyElement.addEventListener('click', () => handleCandyClick(row, col));
     
-    switch (space.type) {
-        case 'go':
-            player.money += space.amount;
-            addLog(`Collected $${space.amount}`);
-            break;
-        case 'property':
-        case 'railroad':
-        case 'utility':
-            handleProperty(space, position);
-            break;
-        case 'tax':
-            player.money -= space.amount;
-            addLog(`Paid $${space.amount} in taxes`);
-            break;
-        case 'chest':
-            handleChest();
-            break;
-        case 'chance':
-            handleChance();
-            break;
-        case 'gotojail':
-            player.position = 10;
-            moveToken(gameState.currentPlayer, 10);
-            addLog(`${player.name} went to Time Out!`);
-            break;
-        case 'free':
-            addLog('Just relaxing at Free Parking!');
-            break;
-        case 'jail':
-            addLog('Just visiting Time Out');
-            break;
-    }
-    
-    updateDisplay();
+    return {
+        element: candyElement,
+        type: type,
+        row: row,
+        col: col
+    };
 }
 
-function handleProperty(space, position) {
-    const player = gameState.players[gameState.currentPlayer];
-    const otherPlayer = gameState.players[gameState.currentPlayer === 1 ? 2 : 1];
-    
-    if (player.properties.includes(position)) {
-        addLog('You already own this property!');
-    } else if (otherPlayer.properties.includes(position)) {
-        player.money -= space.rent;
-        otherPlayer.money += space.rent;
-        addLog(`Paid $${space.rent} rent to other player`);
-    } else {
-        if (player.money >= space.price && confirm(`Buy ${space.name} for $${space.price}?`)) {
-            player.money -= space.price;
-            player.properties.push(position);
-            addLog(`Purchased ${space.name} for $${space.price}`);
+// Regenerate board to avoid initial matches
+function regenerateBoard() {
+    for (let row = 0; row < BOARD_SIZE; row++) {
+        for (let col = 0; col < BOARD_SIZE; col++) {
+            const newType = CANDY_TYPES[Math.floor(Math.random() * CANDY_TYPES.length)];
+            gameState.board[row][col].type = newType;
+            gameState.board[row][col].element.textContent = newType;
         }
     }
 }
 
-function handleChest() {
-    const card = chestCards[Math.floor(Math.random() * chestCards.length)];
-    const player = gameState.players[gameState.currentPlayer];
+// Handle candy click
+function handleCandyClick(row, col) {
+    if (gameState.isProcessing || gameState.moves <= 0) return;
     
-    addLog(`Gift Card: ${card.text}`);
+    const candy = gameState.board[row][col];
     
-    if (card.special === 'go') {
-        player.position = 0;
-        player.money += 200;
-        moveToken(gameState.currentPlayer, 0);
+    if (!gameState.selectedCandy) {
+        // First candy selected
+        gameState.selectedCandy = candy;
+        candy.element.classList.add('selected');
     } else {
-        player.money += card.amount;
+        // Second candy selected
+        const selected = gameState.selectedCandy;
+        selected.element.classList.remove('selected');
+        
+        // Check if adjacent
+        if (isAdjacent(selected, candy)) {
+            swapCandies(selected, candy);
+        } else {
+            gameState.selectedCandy = candy;
+            candy.element.classList.add('selected');
+        }
     }
 }
 
-function handleChance() {
-    const card = chanceCards[Math.floor(Math.random() * chanceCards.length)];
-    const player = gameState.players[gameState.currentPlayer];
+// Check if two candies are adjacent
+function isAdjacent(candy1, candy2) {
+    const rowDiff = Math.abs(candy1.row - candy2.row);
+    const colDiff = Math.abs(candy1.col - candy2.col);
+    return (rowDiff === 1 && colDiff === 0) || (rowDiff === 0 && colDiff === 1);
+}
+
+// Swap two candies
+async function swapCandies(candy1, candy2) {
+    gameState.isProcessing = true;
     
-    addLog(`Surprise: ${card.text}`);
+    // Swap in array
+    [gameState.board[candy1.row][candy1.col], gameState.board[candy2.row][candy2.col]] = 
+    [gameState.board[candy2.row][candy2.col], gameState.board[candy1.row][candy1.col]];
     
-    if (card.special === 'back3') {
-        player.position = Math.max(0, player.position - 3);
-        moveToken(gameState.currentPlayer, player.position);
-        setTimeout(() => handleSpace(player.position), 600);
-    } else if (card.special === 'railroad') {
-        const railroads = [5, 15, 25, 35];
-        const nextRailroad = railroads.find(r => r > player.position) || railroads[0];
-        player.position = nextRailroad;
-        moveToken(gameState.currentPlayer, nextRailroad);
-        setTimeout(() => handleSpace(player.position), 600);
+    // Update positions
+    [candy1.row, candy2.row] = [candy2.row, candy1.row];
+    [candy1.col, candy2.col] = [candy2.col, candy1.col];
+    
+    // Swap types
+    [candy1.type, candy2.type] = [candy2.type, candy1.type];
+    [candy1.element.textContent, candy2.element.textContent] = 
+    [candy2.element.textContent, candy1.element.textContent];
+    
+    await sleep(200);
+    
+    const matches = checkAllMatches();
+    
+    if (matches.length > 0) {
+        // Valid move
+        gameState.moves--;
+        gameState.selectedCandy = null;
+        await processMatches();
     } else {
-        player.money += card.amount;
+        // Invalid move - swap back
+        [gameState.board[candy1.row][candy1.col], gameState.board[candy2.row][candy2.col]] = 
+        [gameState.board[candy2.row][candy2.col], gameState.board[candy1.row][candy1.col]];
+        
+        [candy1.row, candy2.row] = [candy2.row, candy1.row];
+        [candy1.col, candy2.col] = [candy2.col, candy1.col];
+        
+        [candy1.type, candy2.type] = [candy2.type, candy1.type];
+        [candy1.element.textContent, candy2.element.textContent] = 
+        [candy2.element.textContent, candy1.element.textContent];
+        
+        showMessage('No match! Try again');
+        gameState.selectedCandy = null;
+    }
+    
+    updateDisplay();
+    gameState.isProcessing = false;
+    
+    if (gameState.moves <= 0) {
+        endGame();
     }
 }
 
-function endTurn() {
-    gameState.currentPlayer = gameState.currentPlayer === 1 ? 2 : 1;
-    gameState.hasRolled = false;
-    document.getElementById('roll-dice').disabled = false;
-    document.getElementById('end-turn').disabled = true;
+// Check for all matches on the board
+function checkAllMatches() {
+    const matches = [];
     
-    addLog(`--- ${gameState.players[gameState.currentPlayer].name}'s turn ---`);
+    // Check horizontal matches
+    for (let row = 0; row < BOARD_SIZE; row++) {
+        for (let col = 0; col < BOARD_SIZE - 2; col++) {
+            const type = gameState.board[row][col].type;
+            if (type === gameState.board[row][col + 1].type && 
+                type === gameState.board[row][col + 2].type) {
+                let matchLength = 3;
+                while (col + matchLength < BOARD_SIZE && 
+                       gameState.board[row][col + matchLength].type === type) {
+                    matchLength++;
+                }
+                for (let i = 0; i < matchLength; i++) {
+                    matches.push({ row, col: col + i });
+                }
+                col += matchLength - 1;
+            }
+        }
+    }
+    
+    // Check vertical matches
+    for (let col = 0; col < BOARD_SIZE; col++) {
+        for (let row = 0; row < BOARD_SIZE - 2; row++) {
+            const type = gameState.board[row][col].type;
+            if (type === gameState.board[row + 1][col].type && 
+                type === gameState.board[row + 2][col].type) {
+                let matchLength = 3;
+                while (row + matchLength < BOARD_SIZE && 
+                       gameState.board[row + matchLength][col].type === type) {
+                    matchLength++;
+                }
+                for (let i = 0; i < matchLength; i++) {
+                    matches.push({ row: row + i, col });
+                }
+                row += matchLength - 1;
+            }
+        }
+    }
+    
+    // Remove duplicates
+    const uniqueMatches = [];
+    matches.forEach(match => {
+        if (!uniqueMatches.find(m => m.row === match.row && m.col === match.col)) {
+            uniqueMatches.push(match);
+        }
+    });
+    
+    return uniqueMatches;
+}
+
+// Process all matches
+async function processMatches() {
+    let matches = checkAllMatches();
+    
+    while (matches.length > 0) {
+        // Add score
+        const points = matches.length * 10 * gameState.level;
+        gameState.score += points;
+        
+        if (matches.length >= 4) {
+            showMessage(`Amazing! +${points} points! 🎉`);
+        } else {
+            showMessage(`+${points} points!`);
+        }
+        
+        // Animate matched candies
+        matches.forEach(match => {
+            gameState.board[match.row][match.col].element.classList.add('matched');
+        });
+        
+        await sleep(500);
+        
+        // Remove matched candies
+        matches.forEach(match => {
+            gameState.board[match.row][match.col] = null;
+        });
+        
+        // Drop candies
+        await dropCandies();
+        
+        // Fill empty spaces
+        await fillBoard();
+        
+        // Check for new matches
+        matches = checkAllMatches();
+    }
+    
     updateDisplay();
 }
 
-function updateDisplay() {
-    const player = gameState.players[gameState.currentPlayer];
-    document.querySelector('#current-player span').textContent = player.name;
-    document.querySelector('#player-money span').textContent = `$${player.money}`;
+// Drop candies to fill gaps
+async function dropCandies() {
+    for (let col = 0; col < BOARD_SIZE; col++) {
+        let emptyRow = BOARD_SIZE - 1;
+        for (let row = BOARD_SIZE - 1; row >= 0; row--) {
+            if (gameState.board[row][col] !== null) {
+                if (row !== emptyRow) {
+                    gameState.board[emptyRow][col] = gameState.board[row][col];
+                    gameState.board[emptyRow][col].row = emptyRow;
+                    gameState.board[row][col] = null;
+                }
+                emptyRow--;
+            }
+        }
+    }
     
-    const lastLog = gameState.gameLog[gameState.gameLog.length - 1] || '';
-    if (lastLog.includes('rolled')) {
-        document.querySelector('#dice-result span').textContent = lastLog.split('rolled ')[1] || '-';
+    // Update DOM
+    const boardElement = document.getElementById('game-board');
+    boardElement.innerHTML = '';
+    for (let row = 0; row < BOARD_SIZE; row++) {
+        for (let col = 0; col < BOARD_SIZE; col++) {
+            if (gameState.board[row][col]) {
+                boardElement.appendChild(gameState.board[row][col].element);
+            }
+        }
+    }
+    
+    await sleep(200);
+}
+
+// Fill empty spaces with new candies
+async function fillBoard() {
+    for (let row = 0; row < BOARD_SIZE; row++) {
+        for (let col = 0; col < BOARD_SIZE; col++) {
+            if (gameState.board[row][col] === null) {
+                const candy = createCandy(row, col);
+                candy.element.classList.add('falling');
+                gameState.board[row][col] = candy;
+                document.getElementById('game-board').appendChild(candy.element);
+            }
+        }
+    }
+    
+    await sleep(300);
+}
+
+// Show hint
+function showHint() {
+    if (gameState.isProcessing) return;
+    
+    // Remove previous hints
+    document.querySelectorAll('.candy.hint').forEach(el => el.classList.remove('hint'));
+    
+    // Find a valid move
+    for (let row = 0; row < BOARD_SIZE; row++) {
+        for (let col = 0; col < BOARD_SIZE; col++) {
+            // Try swapping with right neighbor
+            if (col < BOARD_SIZE - 1) {
+                const candy1 = gameState.board[row][col];
+                const candy2 = gameState.board[row][col + 1];
+                
+                [candy1.type, candy2.type] = [candy2.type, candy1.type];
+                if (checkAllMatches().length > 0) {
+                    [candy1.type, candy2.type] = [candy2.type, candy1.type];
+                    candy1.element.classList.add('hint');
+                    candy2.element.classList.add('hint');
+                    setTimeout(() => {
+                        candy1.element.classList.remove('hint');
+                        candy2.element.classList.remove('hint');
+                    }, 2000);
+                    return;
+                }
+                [candy1.type, candy2.type] = [candy2.type, candy1.type];
+            }
+            
+            // Try swapping with bottom neighbor
+            if (row < BOARD_SIZE - 1) {
+                const candy1 = gameState.board[row][col];
+                const candy2 = gameState.board[row + 1][col];
+                
+                [candy1.type, candy2.type] = [candy2.type, candy1.type];
+                if (checkAllMatches().length > 0) {
+                    [candy1.type, candy2.type] = [candy2.type, candy1.type];
+                    candy1.element.classList.add('hint');
+                    candy2.element.classList.add('hint');
+                    setTimeout(() => {
+                        candy1.element.classList.remove('hint');
+                        candy2.element.classList.remove('hint');
+                    }, 2000);
+                    return;
+                }
+                [candy1.type, candy2.type] = [candy2.type, candy1.type];
+            }
+        }
     }
 }
 
-function addLog(message) {
-    gameState.gameLog.push(message);
-    const logContent = document.getElementById('log-content');
-    const entry = document.createElement('div');
-    entry.className = 'log-entry';
-    entry.textContent = message;
-    logContent.appendChild(entry);
-    logContent.scrollTop = logContent.scrollHeight;
+// Update display
+function updateDisplay() {
+    document.getElementById('score').textContent = gameState.score;
+    document.getElementById('moves').textContent = gameState.moves;
+    document.getElementById('level').textContent = gameState.level;
 }
 
-function restartGame() {
-    if (confirm('Start a new game?')) {
-        gameState.currentPlayer = 1;
-        gameState.players[1] = { name: 'Player 1', money: 1500, position: 0, properties: [] };
-        gameState.players[2] = { name: 'Player 2', money: 1500, position: 0, properties: [] };
-        gameState.hasRolled = false;
-        gameState.gameLog = [];
-        
-        document.getElementById('log-content').innerHTML = '';
-        document.getElementById('roll-dice').disabled = false;
-        document.getElementById('end-turn').disabled = true;
-        
-        moveToken(1, 0);
-        moveToken(2, 0);
-        
-        updateDisplay();
-        addLog('🎮 New game started! Player 1 goes first.');
-    }
+// Show message
+function showMessage(text) {
+    const messageEl = document.getElementById('game-message');
+    messageEl.textContent = text;
+    messageEl.classList.add('show');
+    setTimeout(() => messageEl.classList.remove('show'), 1500);
+}
+
+// End game
+function endGame() {
+    const message = gameState.score >= 1000 ? 
+        `🎉 Amazing! Final Score: ${gameState.score}! 🎉` : 
+        `Game Over! Score: ${gameState.score}. Try again!`;
+    
+    setTimeout(() => {
+        showMessage(message);
+        if (confirm(`${message}\n\nPlay again?`)) {
+            newGame();
+        }
+    }, 500);
+}
+
+// Start new game
+function newGame() {
+    gameState.score = 0;
+    gameState.moves = 30;
+    gameState.level = 1;
+    gameState.selectedCandy = null;
+    gameState.isProcessing = false;
+    
+    createBoard();
+    updateDisplay();
+    showMessage('New game started! Good luck! 🍀');
+}
+
+// Helper function for delays
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 // Start the game when page loads
