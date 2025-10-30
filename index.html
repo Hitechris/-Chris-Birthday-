@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Christopher! 🎉</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">🎂 Christopher's Birthday</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="gallery.html">Photo Gallery</a></li>
+                <li><a href="wishes.html">Birthday Wishes</a></li>
+                <li><a href="about.html">About Christopher</a></li>
+                <li><a href="memories.html">Memories</a></li>
+                <li><a href="timeline.html">Timeline</a></li>
+                <li><a href="games.html">Games</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Music Player -->
+    <div class="music-player">
+        <div class="music-controls">
+            <div id="song-title" class="song-title">🎵 Happy Rock</div>
+            <div class="music-buttons">
+                <button id="prev-song" class="music-nav-btn">⏮️</button>
+                <button id="music-toggle" class="music-btn">
+                    <span id="music-icon">🎵</span>
+                    <span id="music-text">Play Music</span>
+                </button>
+                <button id="next-song" class="music-nav-btn">⏭️</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Player -->
+    <div class="video-player">
+        <div class="video-controls-header">
+            <div class="video-title" id="video-title">🎬 Celebration Video</div>
+            <button id="toggle-video-player" class="video-toggle-btn">📹 Show Videos</button>
+        </div>
+        <div id="video-player-container" class="video-player-container" style="display: none;">
+            <video id="celebration-video" class="celebration-video" controls>
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-playlist">
+                <div class="playlist-title">📂 Video Playlist</div>
+                <div id="video-list" class="video-list">
+                    <!-- Video items will be added here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section with Photo Slideshow -->
+    <div class="hero-section-home">
+        <div class="hero-overlay"></div>
+        
+        <!-- Photo Slideshow Background -->
+        <div class="slideshow-container">
+            <div class="slide fade">
+                <img src="images/IMG_3587.JPG" alt="Christopher">
+            </div>
+            <div class="slide fade">
+                <img src="images/IMG_3588.JPG" alt="Christopher">
+            </div>
+            <div class="slide fade">
+                <img src="images/IMG_3589.JPG" alt="Christopher">
+            </div>
+            <div class="slide fade">
+                <img src="images/IMG_3590.JPG" alt="Christopher">
+            </div>
+            <div class="slide fade">
+                <img src="images/IMG_3591.JPG" alt="Christopher">
+            </div>
+            <div class="slide fade">
+                <img src="images/IMG_3592.JPG" alt="Christopher">
+            </div>
+            <div class="slide fade">
+                <img src="images/IMG_3599.JPG" alt="Christopher">
+            </div>
+            <div class="slide fade">
+                <img src="images/IMG_3601.JPG" alt="Christopher">
+            </div>
+            <div class="slide fade">
+                <img src="images/IMG_3602.JPG" alt="Christopher">
+            </div>
+            <div class="slide fade">
+                <img src="images/IMG_3603.JPG" alt="Christopher">
+            </div>
+            <div class="slide fade">
+                <img src="images/IMG_3604.JPG" alt="Christopher">
+            </div>
+            <div class="slide fade">
+                <img src="images/IMG_3605.JPG" alt="Christopher">
+            </div>
+        </div>
+        
+        <div class="hero-content-overlay">
+            <h1 class="hero-title-main">🎉 Happy Birthday 🎉</h1>
+            <h2 class="hero-name">Christopher Hite</h2>
+            <p class="hero-subtitle">Celebrating an amazing person on their special day!</p>
+            <div class="hero-buttons">
+                <a href="gallery.html" class="btn btn-primary">View All Photos</a>
+                <a href="wishes.html" class="btn btn-secondary">Read Wishes</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Photos Section -->
+    <section class="featured-section">
+        <div class="container">
+            <h2 class="section-title">📸 Featured Moments</h2>
+            <div class="featured-grid">
+                <div class="featured-card">
+                    <img src="images/IMG_3593.JPG" alt="Christopher">
+                    <div class="featured-overlay">
+                        <p>Wonderful Memories</p>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="images/IMG_3594.JPG" alt="Christopher">
+                    <div class="featured-overlay">
+                        <p>Great Times</p>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="images/IMG_3595.JPG" alt="Christopher">
+                    <div class="featured-overlay">
+                        <p>Special Moments</p>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="images/IMG_3596.JPG" alt="Christopher">
+                    <div class="featured-overlay">
+                        <p>Happy Memories</p>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="images/IMG_3597.JPG" alt="Christopher">
+                    <div class="featured-overlay">
+                        <p>Cherished Times</p>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="images/IMG_3598.JPG" alt="Christopher">
+                    <div class="featured-overlay">
+                        <p>Beautiful Days</p>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="images/IMG_3606.JPG" alt="Christopher">
+                    <div class="featured-overlay">
+                        <p>Amazing Adventures</p>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="images/IMG_3607.JPG" alt="Christopher">
+                    <div class="featured-overlay">
+                        <p>Fun Moments</p>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="images/IMG_3608.JPG" alt="Christopher">
+                    <div class="featured-overlay">
+                        <p>Precious Times</p>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="images/IMG_3609.JPG" alt="Christopher">
+                    <div class="featured-overlay">
+                        <p>Joyful Days</p>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="images/IMG_3610.JPG" alt="Christopher">
+                    <div class="featured-overlay">
+                        <p>Celebration Memories</p>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="images/IMG_3600.PNG" alt="Christopher">
+                    <div class="featured-overlay">
+                        <p>Special Celebrations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Birthday Message Section -->
+    <section class="message-section">
+        <div class="container">
+            <div class="message-box-home">
+                <h2>🎈 A Special Message 🎈</h2>
+                <p>Today we celebrate YOU, Christopher Hite! May this year bring you endless joy, amazing adventures, and all the happiness your heart can hold. You deserve the very best birthday celebration!</p>
+                <a href="wishes.html" class="btn btn-primary">See All Birthday Wishes</a>
+            </div>
+        </div>
+    </section>
+
+    <div id="celebration-container"></div>
+    <div id="balloon-container"></div>
+
+    <div class="celebrate-instruction">
+        👆 Click to pop bubbles with Christopher's photos! 🎈
+    </div>
+
+    <button id="celebrate-btn" class="celebrate-button">
+        🎉 Celebrate Christopher!
+    </button>
+
+    <script src="script.js"></script>
+    <script src="home.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Games - Christopher's Celebration</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="games.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">🎂 Christopher's Birthday</div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html">Photo Gallery</a></li>
+                <li><a href="wishes.html">Birthday Wishes</a></li>
+                <li><a href="about.html">About Christopher</a></li>
+                <li><a href="memories.html">Memories</a></li>
+                <li><a href="timeline.html">Timeline</a></li>
+                <li><a href="games.html" class="active">Games</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container page-content">
+        <header class="page-header">
+            <h1>🍭 Birthday Candy Crush</h1>
+            <p class="subtitle">Match 3 candies to celebrate Christopher's birthday!</p>
+        </header>
+
+        <main>
+            <div class="game-container">
+                <div class="game-sidebar">
+                    <div class="game-stats">
+                        <h3>🎯 Game Stats</h3>
+                        <div class="stat-box">
+                            <div class="stat-label">Score</div>
+                            <div id="score" class="stat-value">0</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Moves Left</div>
+                            <div id="moves" class="stat-value">30</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Level</div>
+                            <div id="level" class="stat-value">1</div>
+                        </div>
+                    </div>
+
+                    <div class="game-controls">
+                        <button id="new-game" class="game-btn primary">🎮 New Game</button>
+                        <button id="hint-btn" class="game-btn secondary">💡 Hint</button>
+                    </div>
+
+                    <div class="game-tips">
+                        <h3>🎯 How to Play</h3>
+                        <ul>
+                            <li>Click and drag to swap candies</li>
+                            <li>Match 3 or more in a row</li>
+                            <li>Score points before moves run out</li>
+                            <li>Special combos for 4+ matches!</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="game-board-container">
+                    <div id="game-board" class="candy-board"></div>
+                    <div id="game-message" class="game-message"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="games.js"></script>
+</body>
+</html>

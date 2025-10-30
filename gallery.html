@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery - Christopher's Birthday 🎉</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">🎂 Christopher's Birthday</div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html" class="active">Photo Gallery</a></li>
+                <li><a href="wishes.html">Birthday Wishes</a></li>
+                <li><a href="about.html">About Christopher</a></li>
+                <li><a href="memories.html">Memories</a></li>
+                <li><a href="timeline.html">Timeline</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container page-content">
+        <header class="page-header">
+            <h1>📸 Photo Gallery</h1>
+            <p class="subtitle">Capturing wonderful memories with Christopher Hite</p>
+        </header>
+
+        <main>
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Photos will be loaded dynamically by JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+        <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+
+    <script src="gallery.js"></script>
+</body>
+</html>
