@@ -158,74 +158,99 @@ async function swapCandies(candy1, candy2) {
 // Check for all matches on the board
 function checkAllMatches() {
     const matches = [];
+    const matchedPositions = new Set();
     
-    // Check horizontal matches
+    // Check horizontal matches (rows)
     for (let row = 0; row < BOARD_SIZE; row++) {
-        for (let col = 0; col < BOARD_SIZE - 2; col++) {
+        let col = 0;
+        while (col < BOARD_SIZE - 2) {
             const type = gameState.board[row][col].type;
-            if (type === gameState.board[row][col + 1].type && 
-                type === gameState.board[row][col + 2].type) {
-                let matchLength = 3;
-                while (col + matchLength < BOARD_SIZE && 
-                       gameState.board[row][col + matchLength].type === type) {
-                    matchLength++;
-                }
+            let matchLength = 1;
+            
+            // Count consecutive candies of the same type
+            while (col + matchLength < BOARD_SIZE && 
+                   gameState.board[row][col + matchLength].type === type) {
+                matchLength++;
+            }
+            
+            // If we have 3 or more matches, add them
+            if (matchLength >= 3) {
                 for (let i = 0; i < matchLength; i++) {
-                    matches.push({ row, col: col + i });
+                    const key = `${row},${col + i}`;
+                    if (!matchedPositions.has(key)) {
+                        matches.push({ row, col: col + i });
+                        matchedPositions.add(key);
+                    }
                 }
-                col += matchLength - 1;
+                col += matchLength;
+            } else {
+                col++;
             }
         }
     }
     
-    // Check vertical matches
+    // Check vertical matches (columns)
     for (let col = 0; col < BOARD_SIZE; col++) {
-        for (let row = 0; row < BOARD_SIZE - 2; row++) {
+        let row = 0;
+        while (row < BOARD_SIZE - 2) {
             const type = gameState.board[row][col].type;
-            if (type === gameState.board[row + 1][col].type && 
-                type === gameState.board[row + 2][col].type) {
-                let matchLength = 3;
-                while (row + matchLength < BOARD_SIZE && 
-                       gameState.board[row + matchLength][col].type === type) {
-                    matchLength++;
-                }
+            let matchLength = 1;
+            
+            // Count consecutive candies of the same type
+            while (row + matchLength < BOARD_SIZE && 
+                   gameState.board[row + matchLength][col].type === type) {
+                matchLength++;
+            }
+            
+            // If we have 3 or more matches, add them
+            if (matchLength >= 3) {
                 for (let i = 0; i < matchLength; i++) {
-                    matches.push({ row: row + i, col });
+                    const key = `${row + i},${col}`;
+                    if (!matchedPositions.has(key)) {
+                        matches.push({ row: row + i, col });
+                        matchedPositions.add(key);
+                    }
                 }
-                row += matchLength - 1;
+                row += matchLength;
+            } else {
+                row++;
             }
         }
     }
     
-    // Remove duplicates
-    const uniqueMatches = [];
-    matches.forEach(match => {
-        if (!uniqueMatches.find(m => m.row === match.row && m.col === match.col)) {
-            uniqueMatches.push(match);
-        }
-    });
-    
-    return uniqueMatches;
+    return matches;
 }
 
 // Process all matches
 async function processMatches() {
     let matches = checkAllMatches();
+    let comboCount = 0;
     
     while (matches.length > 0) {
-        // Add score
-        const points = matches.length * 10 * gameState.level;
+        comboCount++;
+        
+        // Add score with combo multiplier
+        const basePoints = matches.length * 10;
+        const points = basePoints * gameState.level * comboCount;
         gameState.score += points;
         
-        if (matches.length >= 4) {
-            showMessage(`Amazing! +${points} points! 🎉`);
+        // Show different messages based on match size
+        if (matches.length >= 5) {
+            showMessage(`🌟 MEGA COMBO! +${points} points! 🌟`);
+        } else if (matches.length >= 4) {
+            showMessage(`🎉 SUPER! +${points} points! 🎉`);
+        } else if (comboCount > 1) {
+            showMessage(`⚡ ${comboCount}x COMBO! +${points} points!`);
         } else {
-            showMessage(`+${points} points!`);
+            showMessage(`✨ Match 3! +${points} points!`);
         }
         
         // Animate matched candies
         matches.forEach(match => {
-            gameState.board[match.row][match.col].element.classList.add('matched');
+            const candy = gameState.board[match.row][match.col];
+            if (candy && candy.element) {
+                candy.element.classList.add('matched');
+            }
         });
         
         await sleep(500);
@@ -241,8 +266,12 @@ async function processMatches() {
         // Fill empty spaces
         await fillBoard();
         
-        // Check for new matches
+        // Check for new matches (cascading)
         matches = checkAllMatches();
+        
+        if (matches.length > 0) {
+            await sleep(200); // Small delay before processing cascade
+        }
     }
     
     updateDisplay();
