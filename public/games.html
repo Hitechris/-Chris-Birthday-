@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Games - Christopher's Celebration</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="games.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">🎂 Christopher's Birthday</div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html">Photo Gallery</a></li>
+                <li><a href="wishes.html">Birthday Wishes</a></li>
+                <li><a href="about.html">About Christopher</a></li>
+                <li><a href="memories.html">Memories</a></li>
+                <li><a href="timeline.html">Timeline</a></li>
+                <li><a href="games.html" class="active">Games</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container page-content">
+        <header class="page-header">
+            <h1>🎮 Birthday Party Games</h1>
+            <p class="subtitle">Play Christopher's Birthday Monopoly!</p>
+        </header>
+
+        <main>
+            <div class="game-container">
+                <div class="game-info">
+                    <div class="player-stats">
+                        <h3>🎲 Player Stats</h3>
+                        <div id="current-player" class="stat-item">Current Player: <span>Player 1</span></div>
+                        <div id="player-money" class="stat-item">Money: <span>$1500</span></div>
+                        <div id="dice-result" class="stat-item">Last Roll: <span>-</span></div>
+                    </div>
+                    <div class="game-controls">
+                        <button id="roll-dice" class="game-btn">🎲 Roll Dice</button>
+                        <button id="end-turn" class="game-btn" disabled>End Turn</button>
+                        <button id="restart-game" class="game-btn secondary">🔄 New Game</button>
+                    </div>
+                    <div class="game-log">
+                        <h3>📜 Game Log</h3>
+                        <div id="log-content"></div>
+                    </div>
+                </div>
+
+                <div class="monopoly-board">
+                    <div class="board-space corner go" data-space="0">
+                        <div class="space-name">GO</div>
+                        <div class="space-info">Collect $200</div>
+                    </div>
+                    <div class="board-space property brown" data-space="1">
+                        <div class="property-color"></div>
+                        <div class="space-name">Birthday Cake Avenue</div>
+                        <div class="space-price">$60</div>
+                    </div>
+                    <div class="board-space special" data-space="2">
+                        <div class="space-name">🎁 Gift Card</div>
+                    </div>
+                    <div class="board-space property brown" data-space="3">
+                        <div class="property-color"></div>
+                        <div class="space-name">Party Hat Place</div>
+                        <div class="space-price">$60</div>
+                    </div>
+                    <div class="board-space special" data-space="4">
+                        <div class="space-name">Birthday Tax</div>
+                        <div class="space-info">Pay $200</div>
+                    </div>
+                    <div class="board-space property railroad" data-space="5">
+                        <div class="space-name">🚂 Celebration Station</div>
+                        <div class="space-price">$200</div>
+                    </div>
+                    <div class="board-space property lightblue" data-space="6">
+                        <div class="property-color"></div>
+                        <div class="space-name">Balloon Boulevard</div>
+                        <div class="space-price">$100</div>
+                    </div>
+                    <div class="board-space special" data-space="7">
+                        <div class="space-name">❓ Surprise</div>
+                    </div>
+                    <div class="board-space property lightblue" data-space="8">
+                        <div class="property-color"></div>
+                        <div class="space-name">Confetti Court</div>
+                        <div class="space-price">$100</div>
+                    </div>
+                    <div class="board-space property lightblue" data-space="9">
+                        <div class="property-color"></div>
+                        <div class="space-name">Streamers Street</div>
+                        <div class="space-price">$120</div>
+                    </div>
+
+                    <div class="board-space corner jail" data-space="10">
+                        <div class="space-name">Time Out</div>
+                        <div class="space-info">Just Visiting</div>
+                    </div>
+
+                    <div class="board-space property pink" data-space="11">
+                        <div class="property-color"></div>
+                        <div class="space-name">Candle Lane</div>
+                        <div class="space-price">$140</div>
+                    </div>
+                    <div class="board-space property utility" data-space="12">
+                        <div class="space-name">🎵 Music Box</div>
+                        <div class="space-price">$150</div>
+                    </div>
+                    <div class="board-space property pink" data-space="13">
+                        <div class="property-color"></div>
+                        <div class="space-name">Frosting Falls</div>
+                        <div class="space-price">$140</div>
+                    </div>
+                    <div class="board-space property pink" data-space="14">
+                        <div class="property-color"></div>
+                        <div class="space-name">Sprinkles Square</div>
+                        <div class="space-price">$160</div>
+                    </div>
+                    <div class="board-space property railroad" data-space="15">
+                        <div class="space-name">🚂 Party Express</div>
+                        <div class="space-price">$200</div>
+                    </div>
+                    <div class="board-space property orange" data-space="16">
+                        <div class="property-color"></div>
+                        <div class="space-name">Wish Avenue</div>
+                        <div class="space-price">$180</div>
+                    </div>
+    <div class="board-space special" data-space="17">
+                        <div class="space-name">🎁 Gift Card</div>
+                    </div>
+                    <div class="board-space property orange" data-space="18">
+                        <div class="property-color"></div>
+                        <div class="space-name">Memory Lane</div>
+                        <div class="space-price">$180</div>
+                    </div>
+                    <div class="board-space property orange" data-space="19">
+                        <div class="property-color"></div>
+                        <div class="space-name">Celebration Circle</div>
+                        <div class="space-price">$200</div>
+                    </div>
+
+                    <div class="board-space corner free-parking" data-space="20">
+                        <div class="space-name">Free Parking</div>
+                        <div class="space-info">Rest Here!</div>
+                    </div>
+
+                    <div class="board-space property red" data-space="21">
+                        <div class="property-color"></div>
+                        <div class="space-name">Gift Wrap Grove</div>
+                        <div class="space-price">$220</div>
+                    </div>
+                    <div class="board-space special" data-space="22">
+                        <div class="space-name">❓ Surprise</div>
+                    </div>
+                    <div class="board-space property red" data-space="23">
+                        <div class="property-color"></div>
+                        <div class="space-name">Present Plaza</div>
+                        <div class="space-price">$220</div>
+                    </div>
+                    <div class="board-space property red" data-space="24">
+                        <div class="property-color"></div>
+                        <div class="space-name">Ribbon Road</div>
+                        <div class="space-price">$240</div>
+                    </div>
+                    <div class="board-space property railroad" data-space="25">
+                        <div class="space-name">🚂 Joy Junction</div>
+                        <div class="space-price">$200</div>
+                    </div>
+                    <div class="board-space property yellow" data-space="26">
+                        <div class="property-color"></div>
+                        <div class="space-name">Happiness Highway</div>
+                        <div class="space-price">$260</div>
+                    </div>
+                    <div class="board-space property yellow" data-space="27">
+                        <div class="property-color"></div>
+                        <div class="space-name">Smile Street</div>
+                        <div class="space-price">$260</div>
+                    </div>
+                    <div class="board-space property utility" data-space="28">
+                        <div class="space-name">🎪 Party Tent</div>
+                        <div class="space-price">$150</div>
+                    </div>
+                    <div class="board-space property yellow" data-space="29">
+                        <div class="property-color"></div>
+                        <div class="space-name">Laughter Lane</div>
+                        <div class="space-price">$280</div>
+                    </div>
+
+                    <div class="board-space corner go-to-jail" data-space="30">
+                        <div class="space-name">Go to Time Out</div>
+                    </div>
+
+                    <div class="board-space property green" data-space="31">
+                        <div class="property-color"></div>
+                        <div class="space-name">Christopher Court</div>
+                        <div class="space-price">$300</div>
+                    </div>
+                    <div class="board-space property green" data-space="32">
+                        <div class="property-color"></div>
+                        <div class="space-name">Birthday Boulevard</div>
+                        <div class="space-price">$300</div>
+                    </div>
+                    <div class="board-space special" data-space="33">
+                        <div class="space-name">🎁 Gift Card</div>
+                    </div>
+                    <div class="board-space property green" data-space="34">
+                        <div class="property-color"></div>
+                        <div class="space-name">Festivity Field</div>
+                        <div class="space-price">$320</div>
+                    </div>
+                    <div class="board-space property railroad" data-space="35">
+                        <div class="space-name">🚂 Fun Ferry</div>
+                        <div class="space-price">$200</div>
+                    </div>
+                    <div class="board-space special" data-space="36">
+                        <div class="space-name">❓ Surprise</div>
+                    </div>
+                    <div class="board-space property darkblue" data-space="37">
+                        <div class="property-color"></div>
+                        <div class="space-name">VIP Village</div>
+                        <div class="space-price">$350</div>
+                    </div>
+                    <div class="board-space special" data-space="38">
+                        <div class="space-name">Luxury Tax</div>
+                        <div class="space-info">Pay $100</div>
+                    </div>
+                    <div class="board-space property darkblue" data-space="39">
+                        <div class="property-color"></div>
+                        <div class="space-name">Party Palace</div>
+                        <div class="space-price">$400</div>
+                    </div>
+
+                    <div class="board-center">
+                        <h2>🎉 Christopher's Birthday Monopoly 🎂</h2>
+                        <p>Roll the dice and celebrate!</p>
+                    </div>
+
+                    <div id="player1-token" class="player-token player1" data-position="0">🎈</div>
+                    <div id="player2-token" class="player-token player2" data-position="0">🎁</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="games.js"></script>
+</body>
+</html>
